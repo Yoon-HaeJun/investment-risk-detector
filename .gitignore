@@ -1,2 +1,9 @@
 # Jupyter Notebook
 .ipynb_checkpoints
+docs_cache
+
+# Environments
+.env
+
+# Data
+data/
