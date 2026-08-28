@@ -1,34 +1,25 @@
-# Jupyter Notebook
-.ipynb_checkpoints
-docs_cache
-
-# Environments
+# 환경 변수 및 가상환경
 .env
-.venv
-env/
 venv/
-ENV/
+env/
 
-# Data
-data/
-*.csv
-*.tsv
-*.parquet
-*.json
-*.sqlite3
-*.db
-
-# Python
+# 파이썬 임시/캐시 파일
 __pycache__/
-*.py
+*.py[cod]
 *$py.class
-*.so
+*.pkl
 
-# IDEs and OS
+# 주피터 노트북 설정 파일
+.ipynb_checkpoints/
+
+# 데이터 및 로그 파일
+*.csv
+*.xlsx
+*.log
+*.db
+*.sqlite3
+
+# OS 및 에디터 찌꺼기 파일
+.DS_Store
 .vscode/
 .idea/
-.DS_Store
-
-# Logs
-logs/
-*.log
