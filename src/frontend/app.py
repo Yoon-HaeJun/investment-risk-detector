@@ -5,10 +5,12 @@ import requests
 st.set_page_config(page_title="Investment Risk Detector", page_icon="🚨", layout="centered")
 
 st.title("🚨 기업 투자 리스크 탐지기")
-st.markdown("KOSPI 상위 50개 기업의 재무 상태와 악재성 공시를 분석하여 위험도를 알려드립니다.")
+
+st.markdown("국내 전체 상장사의 재무 상태와 악재성 공시를 분석하여 투자 위험도를 알려드립니다.")
 
 # 사용자 입력 폼
-corp_name = st.text_input("🔍 분석할 기업명을 입력하세요 (예: 삼성전자, 카카오):", "")
+# 검색 예시도 삼성전자, 카카오뿐만 아니라 종목코드나 다른 상장사가 가능함을 보여주도록 수정
+corp_name = st.text_input("🔍 분석할 기업명 또는 6자리 종목코드를 입력하세요 (예: [삼성전자, 005930], [NAVER, 035420]):", "")
 analyze_button = st.button("리스크 분석 시작")
 
 # 백엔드 API 통신 및 화면 렌더링
@@ -39,13 +41,13 @@ if analyze_button and corp_name:
                 
                 with col1:
                     st.markdown("#### 💰 재무 리스크")
-                    st.write(f"**점수:** {result['financial_risk']['score']}점")
+                    st.write(f"**차감 점수:** -{result['financial_risk']['penalty']}점")
                     for detail in result['financial_risk']['details']:
                         st.write(f"- {detail}")
                         
                 with col2:
                     st.markdown("#### 📄 공시 리스크")
-                    st.write(f"**점수:** {result['text_risk']['score']}점")
+                    st.write(f"**차감 점수:** -{result['text_risk']['penalty']}점")
                     for detail in result['text_risk']['details']:
                         st.write(f"- {detail}")
                         
