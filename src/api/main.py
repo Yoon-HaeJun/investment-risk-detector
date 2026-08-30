@@ -73,7 +73,7 @@ def calculate_total_risk(corp_name: str, corp_code: str):
 
         disclosures = dart.list(corp_code, start=bgn_de, end=end_de)
         if disclosures is not None and not disclosures.empty:
-            # 정정 공시 제외 전처리
+            # 공시 제외 전처리
             filtered_df = disclosures[~disclosures['report_nm'].str.contains(r'\[기재정정\]|\[첨부추가\]|증권발행실적|투자설명서', na=False)]
             
             # API 및 서버 부하 방지를 위해 가장 최근 공시 최대 3개만 AI 검사 진행
