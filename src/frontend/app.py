@@ -18,7 +18,7 @@ if analyze_button and corp_name:
     with st.spinner(f"'{corp_name}'의 공시 및 재무 데이터를 분석 중입니다..."):
         try:
             # FastAPI 백엔드 서버로 GET 요청
-            API_URL = f"http://127.0.0.1:8000/api/risk/{corp_name}"
+            API_URL = f"https://investment-risk-detector.onrender.com/api/risk/{corp_name}"
             response = requests.get(API_URL)
             
             if response.status_code == 200:
