@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+from requests.exceptions import Timeout, ConnectionError
 
 # 페이지 기본 설정
 st.set_page_config(page_title="Investment Risk Detector", page_icon="🚨", layout="centered")
@@ -18,8 +19,11 @@ if analyze_button and corp_name:
     with st.spinner(f"'{corp_name}'의 공시 및 재무 데이터를 분석 중입니다..."):
         try:
             # FastAPI 백엔드 서버로 GET 요청
-            API_URL = f"https://investment-risk-detector.onrender.com/api/risk/{corp_name}"
-            response = requests.get(API_URL)
+
+            #시연을 위해 API 주소를 localhost로 변경
+            API_URL = f"http://127.0.0.1:8000/api/risk/{corp_name}"
+            # API_URL = f"https://investment-risk-detector.onrender.com/api/risk/{corp_name}"
+            response = requests.get(API_URL, timeout=120)
             
             if response.status_code == 200:
                 result = response.json()
@@ -56,5 +60,7 @@ if analyze_button and corp_name:
             else:
                 st.error("❌ 서버 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.")
                 
-        except requests.exceptions.ConnectionError:
-            st.error("🚨 백엔드 API 서버(FastAPI)가 꺼져 있습니다. 먼저 서버를 실행해 주세요.")
+        except Timeout:
+            st.error("🚨 서버 응답 지연 (Timeout): AI가 대량의 공시 문맥을 분석하느라 연산 시간이 오래 걸리고 있습니다. 잠시 후 다시 시도하거나 서버 상태를 확인해 주세요.")
+        except ConnectionError:
+            st.error("🚨 서버 연결 실패: 백엔드 서버(FastAPI)가 꺼져 있습니다. 터미널에서 서버를 먼저 실행해 주세요.")
